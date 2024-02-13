@@ -7,9 +7,35 @@
 			<StackPanel Orientation="Horizontal">
 				<Button Classes="MoveLeftBtn" Width="60" Height="60"/>
 				<Button Classes="MoveRightBtn" Width="60" Height="60"/>
+
+				<Button Classes="BlueRoundedBtn">Button</Button>
 			</StackPanel>
         </Border>
     </Design.PreviewWith>
+
+
+	<Style Selector="Button.BlueRoundedBtn">
+		<Setter Property="CornerRadius" Value="60"/>
+		<Setter Property="Background" Value="{StaticResource BlueBrush}"/>
+		<Setter Property="BorderThickness" Value="1"/>
+		<Setter Property="BorderBrush" Value="{StaticResource TransparentBrush}"/>
+		<Setter Property="Foreground" Value="{StaticResource WhiteBrush}"/>
+		<Setter Property="FontWeight" Value="500"/>
+		<Setter Property="Padding" Value="30 10"/>
+		<Setter Property="HorizontalAlignment" Value="Stretch"/>
+		<Setter Property="VerticalAlignment" Value="Stretch"/>
+		<Setter Property="HorizontalContentAlignment" Value="Center"/>
+		<Setter Property="VerticalContentAlignment" Value="Center"/>
+	</Style>
+	<Style Selector="Button.BlueRoundedBtn:pointerover /template/ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="{StaticResource WhiteBrush}" />
+		<Setter Property="Foreground" Value="{StaticResource BlueBrush}" />
+		<Setter Property="BorderBrush" Value="{StaticResource BlueBrush}"/>
+	</Style>
+	<Style Selector="Button.BlueRoundedBtn:disabled /template/ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Opacity" Value="0.5"/>
+	</Style>
+
 
 
 	<Style Selector="Button.MoveLeftBtn">

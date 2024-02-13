@@ -1,0 +1,45 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Design.PreviewWith>
+		<Border Padding="20">
+			<StackPanel Orientation="Vertical" Spacing="20">
+				<TextBlock Classes="MainTextBlock" >MainTextBlock</TextBlock>
+				<TextBox Classes="MainTextBox" >MainTextBlock</TextBox>
+			</StackPanel>
+		</Border>
+	</Design.PreviewWith>
+
+	<Style Selector="TextBlock.MainTextBlock">
+		<Setter Property="Foreground" Value="{StaticResource DarkGrayBrush}"/>
+		<Setter Property="FontSize" Value="16"/>
+		<Setter Property="FontWeight" Value="700"/>
+		<Setter Property="FontFamily" Value="Mongolian Baiti"/>
+		<Setter Property="HorizontalAlignment" Value="Center"/>
+		<Setter Property="VerticalAlignment" Value="Center"/>
+	</Style>
+
+	<Style Selector="TextBox.MainTextBox">
+		<Setter Property="FontSize" Value="13"/>
+		<Setter Property="FontWeight" Value="Medium"/>
+		<Setter Property="FontFamily" Value="Mongolian Baiti"/>
+		<Setter Property="Background" Value="{StaticResource TransparentBrush}"/>
+		<Setter Property="Foreground" Value="{StaticResource DarkGrayBrush}"/>
+		<Setter Property="CaretBrush" Value="{StaticResource LightGrayBrush}"/>
+		<Setter Property="BorderBrush" Value="{StaticResource DarkGrayBrush}"/>
+		<Setter Property="BorderThickness" Value="0,0,0,1"/>
+		<Setter Property="Width" Value="200"/>
+		<Setter Property="HorizontalAlignment" Value="Center"/>
+		<Setter Property="VerticalAlignment" Value="Center"/>
+	</Style>
+	<Style Selector="TextBox.MainTextBox:focus /template/ Border#PART_BorderElement">
+		<Setter Property="Background" Value="{StaticResource TransparentBrush}"/>
+		<Setter Property="BorderBrush" Value="{DynamicResource DarkGrayBrush}"/>
+		<Setter Property="BorderThickness" Value="0,0,0,1"/>
+	</Style>
+	<Style Selector="TextBox.MainTextBox:pointerover /template/ Border#PART_BorderElement">
+		<Setter Property="Background" Value="{StaticResource TransparentBrush}" />
+	</Style>
+	<Style Selector="TextBox.MainTextBox:disabled /template/ Border#PART_BorderElement">
+		<Setter Property="Background" Value="{StaticResource TransparentBrush}" />
+	</Style>
+</Styles>
