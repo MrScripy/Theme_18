@@ -56,7 +56,8 @@
 
 					<StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="20" HorizontalAlignment="Center">
 						<Button Classes="BlueRoundedBtn" FontSize="12" Content="Добавить"/>
-						<Button Classes="BlueRoundedBtn" Content="Сохранить" FontSize="12"/>						
+						<Button Classes="BlueRoundedBtn" Content="Сохранить pdf" FontSize="12"/>						
+						<Button Classes="BlueRoundedBtn" Content="Сохранить txt" FontSize="12"/>						
 					</StackPanel>
 				</Grid>
 			</TabItem>
@@ -90,7 +91,8 @@
 
 					<StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="20" HorizontalAlignment="Center">
 						<Button Classes="BlueRoundedBtn" FontSize="12" Content="Добавить"/>
-						<Button Classes="BlueRoundedBtn" Content="Сохранить" FontSize="12"/>
+						<Button Classes="BlueRoundedBtn" Content="Сохранить pdf" FontSize="12"/>
+						<Button Classes="BlueRoundedBtn" Content="Сохранить txt" FontSize="12"/>
 					</StackPanel>
 				</Grid>
 			</TabItem>
@@ -124,7 +126,8 @@
 
 					<StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="20" HorizontalAlignment="Center">
 						<Button Classes="BlueRoundedBtn" FontSize="12" Content="Добавить"/>
-						<Button Classes="BlueRoundedBtn" Content="Сохранить" FontSize="12"/>
+						<Button Classes="BlueRoundedBtn" Content="Сохранить pdf" FontSize="12"/>
+						<Button Classes="BlueRoundedBtn" Content="Сохранить txt" FontSize="12"/>
 					</StackPanel>
 				</Grid>
 			</TabItem>
@@ -164,7 +167,8 @@
 
 					<StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="20" HorizontalAlignment="Center">
 						<Button Classes="BlueRoundedBtn" FontSize="12" Content="Добавить"/>
-						<Button Classes="BlueRoundedBtn" Content="Сохранить" FontSize="12"/>
+						<Button Classes="BlueRoundedBtn" Content="Сохранить pdf" FontSize="12"/>
+						<Button Classes="BlueRoundedBtn" Content="Сохранить txt" FontSize="12"/>
 					</StackPanel>
 				</Grid>
 			</TabItem>
