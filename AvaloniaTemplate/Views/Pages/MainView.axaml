@@ -16,9 +16,9 @@
 		<TextBlock Classes="MainTextBlock" Grid.Row="0" Text="Animals" FontSize="26"/>
 
 		<StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="20" HorizontalAlignment="Center">
-			<Button Classes="BlueRoundedBtn" FontSize="12" Content="Добавить"/>
-			<Button Classes="BlueRoundedBtn" Content="Сохранить pdf" FontSize="12"/>
-			<Button Classes="BlueRoundedBtn" Content="Сохранить txt" FontSize="12"/>
+			<Button Classes="BlueRoundedBtn" FontSize="12" Content="Add animal" Command="{Binding AddAnimalCommand}"/>
+			<Button Classes="BlueRoundedBtn" Content="Save pdf" FontSize="12"/>
+			<Button Classes="BlueRoundedBtn" Content="Save txt" FontSize="12"/>
 		</StackPanel>
 		
 		<TabControl Grid.Row="2" Margin="40 0">

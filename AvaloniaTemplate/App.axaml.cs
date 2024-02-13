@@ -87,7 +87,7 @@ public partial class App : Application
         services.AddTransient<FirstDialogWindowViewModel>();
 
         services.AddTransient<MainViewModel>();
-        services.AddTransient<AnotherPageViewModel>();
+        services.AddTransient<AddAnimalWindowViewModel>();
         services.AddSingleton<MainWindowViewModel>();
 
         // main window
