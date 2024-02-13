@@ -4,14 +4,177 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:AvaloniaTemplate.ViewModels.Pages"
              mc:Ignorable="d" 
-			 d:DesignWidth="800" d:DesignHeight="450"
+			 d:DesignWidth="1000" d:DesignHeight="600"
 			 
              x:Class="AvaloniaTemplate.Views.Pages.MainView"
-             x:DataType="vm:MainViewModel">
+             x:DataType="vm:MainViewModel"
+			 Background="{StaticResource GradientBack}"
+			 >
 
 
-	<Grid RowDefinitions="1* 1* 1*">
-		
+	<Grid RowDefinitions="0.1* 0.9* ">
+		<TextBlock Classes="MainTextBlock" Grid.Row="0" Text="Animals" FontSize="26"/>
+
+		<TabControl Grid.Row="1" Margin="40 0">
+			<TabControl.Styles>
+				<Style Selector="TabItem">
+					<Setter Property="FontSize" Value="15"/>
+				</Style>
+			</TabControl.Styles>
+			<TabControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Spacing="10" Margin="0 0 0 20"/>
+				</ItemsPanelTemplate>
+			</TabControl.ItemsPanel>
+
+			<!--Mammals-->
+			<TabItem Header="Mammals">
+				<Grid RowDefinitions="0.1* 0.9*">
+					<DataGrid Grid.Row="1"
+							  ItemsSource="{}" 
+							  SelectedItem="{}"
+							  AutoGenerateColumns="False" 
+							  VerticalAlignment="Stretch" 
+							  HorizontalAlignment="Stretch"
+							  IsReadOnly="True"
+							  Margin="0 10 0 0"
+							  >
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Name"
+														Binding="{Binding}"
+														Width="*"														
+														CanUserSort="True"
+													/>
+							<DataGridTextColumn Header="Lat.Name"
+														Binding="{Binding Name}"
+														Width="*"														
+														CanUserSort="True"
+													/>
+						</DataGrid.Columns>
+						
+					</DataGrid>
+
+					<StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="20" HorizontalAlignment="Center">
+						<Button Classes="BlueRoundedBtn" FontSize="12" Content="Добавить"/>
+						<Button Classes="BlueRoundedBtn" Content="Сохранить pdf" FontSize="12"/>						
+						<Button Classes="BlueRoundedBtn" Content="Сохранить txt" FontSize="12"/>						
+					</StackPanel>
+				</Grid>
+			</TabItem>
+
+			<!--Birds-->
+			<TabItem Header="Birds">
+				<Grid RowDefinitions="0.1* 0.9*">
+					<DataGrid Grid.Row="1"
+							  ItemsSource="{}"
+							  SelectedItem="{}"
+							  AutoGenerateColumns="False"
+							  VerticalAlignment="Stretch"
+							  HorizontalAlignment="Stretch"
+							  IsReadOnly="True"
+							  Margin="0 10 0 0"
+							  >
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Name"
+														Binding="{Binding}"
+														Width="*"
+														CanUserSort="True"
+													/>
+							<DataGridTextColumn Header="Lat.Name"
+														Binding="{Binding Name}"
+														Width="*"
+														CanUserSort="True"
+													/>
+						</DataGrid.Columns>
+
+					</DataGrid>
+
+					<StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="20" HorizontalAlignment="Center">
+						<Button Classes="BlueRoundedBtn" FontSize="12" Content="Добавить"/>
+						<Button Classes="BlueRoundedBtn" Content="Сохранить pdf" FontSize="12"/>
+						<Button Classes="BlueRoundedBtn" Content="Сохранить txt" FontSize="12"/>
+					</StackPanel>
+				</Grid>
+			</TabItem>
+
+			<!--Amphibians-->
+			<TabItem Header="Amphibians">
+				<Grid RowDefinitions="0.1* 0.9*">
+					<DataGrid Grid.Row="1"
+							  ItemsSource="{}"
+							  SelectedItem="{}"
+							  AutoGenerateColumns="False"
+							  VerticalAlignment="Stretch"
+							  HorizontalAlignment="Stretch"
+							  IsReadOnly="True"
+							  Margin="0 10 0 0"
+							  >
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Name"
+														Binding="{Binding}"
+														Width="*"
+														CanUserSort="True"
+													/>
+							<DataGridTextColumn Header="Lat.Name"
+														Binding="{Binding Name}"
+														Width="*"
+														CanUserSort="True"
+													/>
+						</DataGrid.Columns>
+
+					</DataGrid>
+
+					<StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="20" HorizontalAlignment="Center">
+						<Button Classes="BlueRoundedBtn" FontSize="12" Content="Добавить"/>
+						<Button Classes="BlueRoundedBtn" Content="Сохранить pdf" FontSize="12"/>
+						<Button Classes="BlueRoundedBtn" Content="Сохранить txt" FontSize="12"/>
+					</StackPanel>
+				</Grid>
+			</TabItem>
+
+			<!--All-->
+			<TabItem Header="All">
+				<Grid RowDefinitions="0.1* 0.9*">
+					<DataGrid Grid.Row="1"
+							  ItemsSource="{}"
+							  SelectedItem="{}"
+							  AutoGenerateColumns="False"
+							  VerticalAlignment="Stretch"
+							  HorizontalAlignment="Stretch"
+							  IsReadOnly="True"
+							  Margin="0 10 0 0"
+							  >
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Type"
+														Binding="{Binding}"
+														Width="*"
+														CanUserSort="True"
+													/>
+							<DataGridTextColumn Header="Name"
+														Binding="{Binding}"
+														Width="*"
+														CanUserSort="True"
+													/>
+							<DataGridTextColumn Header="Lat.Name"
+														Binding="{Binding Name}"
+														Width="*"
+														CanUserSort="True"
+													/>
+							
+						</DataGrid.Columns>
+
+					</DataGrid>
+
+					<StackPanel Grid.Row="0" Orientation="Horizontal" Spacing="20" HorizontalAlignment="Center">
+						<Button Classes="BlueRoundedBtn" FontSize="12" Content="Добавить"/>
+						<Button Classes="BlueRoundedBtn" Content="Сохранить pdf" FontSize="12"/>
+						<Button Classes="BlueRoundedBtn" Content="Сохранить txt" FontSize="12"/>
+					</StackPanel>
+				</Grid>
+			</TabItem>
+
+
+		</TabControl>
 	</Grid>
 
 
