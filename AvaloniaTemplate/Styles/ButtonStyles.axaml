@@ -1,0 +1,62 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:materialIcons="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+		>
+    <Design.PreviewWith>
+        <Border Padding="20">
+			<StackPanel Orientation="Horizontal">
+				<Button Classes="MoveLeftBtn" Width="60" Height="60"/>
+				<Button Classes="MoveRightBtn" Width="60" Height="60"/>
+			</StackPanel>
+        </Border>
+    </Design.PreviewWith>
+
+
+	<Style Selector="Button.MoveLeftBtn">
+		<Setter Property="Background" Value="{StaticResource BlueBrush}"/>
+		<Setter Property="CornerRadius" Value="30"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="Content">
+			<Setter.Value>
+				<Template>
+					<materialIcons:MaterialIcon Kind="MenuLeft"
+												HorizontalAlignment="Center"
+												VerticalAlignment="Center"
+												Height="50"
+												Width="50"
+												Foreground="{StaticResource WhiteBrush}"
+												/>
+
+				</Template>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	<Style Selector="Button.MoveLeftBtn:pointerover /template/ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="{StaticResource BlueBrush}"/>
+	</Style>
+
+	<Style Selector="Button.MoveRightBtn">
+		<Setter Property="Background" Value="{StaticResource BlueBrush}"/>
+		<Setter Property="CornerRadius" Value="30"/>
+		<Setter Property="BorderThickness" Value="0"/>
+		<Setter Property="Content">
+			<Setter.Value>
+				<Template>
+					<materialIcons:MaterialIcon Kind="MenuRight"
+												HorizontalAlignment="Center"
+												VerticalAlignment="Center"
+												Height="50"
+												Width="50"
+												Foreground="{StaticResource WhiteBrush}"
+												/>
+
+				</Template>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	<Style Selector="Button.MoveRightBtn:pointerover /template/ContentPresenter#PART_ContentPresenter">
+		<Setter Property="Background" Value="{StaticResource BlueBrush}"/>
+	</Style>
+
+
+</Styles>
