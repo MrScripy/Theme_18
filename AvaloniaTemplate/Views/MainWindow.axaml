@@ -6,9 +6,9 @@
         xmlns:views="clr-namespace:AvaloniaTemplate.Views.Pages;assembly=AvaloniaTemplate"
 		xmlns:pages="clr-namespace:AvaloniaTemplate.ViewModels.Pages;assembly=AvaloniaTemplate"
         mc:Ignorable="d"		
-		d:DesignWidth="800" d:DesignHeight="450"
-		Width="800" Height="450"
-		MinWidth="800" MinHeight="450"
+		d:DesignWidth="1000" d:DesignHeight="600"
+		Width="1000" Height="600"
+		MinWidth="1000" MinHeight="600"
         x:Class="AvaloniaTemplate.Views.MainWindow"
 		x:DataType="vm:MainWindowViewModel"
 		

@@ -21,6 +21,7 @@
 		<Setter Property="BorderBrush" Value="{StaticResource TransparentBrush}"/>
 		<Setter Property="Foreground" Value="{StaticResource WhiteBrush}"/>
 		<Setter Property="FontWeight" Value="500"/>
+		<Setter Property="FontFamily" Value="Arial"/>
 		<Setter Property="Padding" Value="30 10"/>
 		<Setter Property="HorizontalAlignment" Value="Stretch"/>
 		<Setter Property="VerticalAlignment" Value="Stretch"/>
