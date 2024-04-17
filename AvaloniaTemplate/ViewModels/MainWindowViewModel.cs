@@ -11,7 +11,7 @@ namespace AvaloniaTemplate.ViewModels
     public partial class MainWindowViewModel : ViewModelBase    
     {
         [ObservableProperty]
-        private string _windowTitle = "Window Title";
+        private string _windowTitle = "Animals";
         
         private NavigationStore _navigationStore;
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
