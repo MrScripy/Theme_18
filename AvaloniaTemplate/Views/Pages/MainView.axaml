@@ -111,7 +111,7 @@
 					</DataGrid>
 			</TabItem>
 
-			<!--All-->
+			<!--All--><!--
 			<TabItem Header="All">			
 					<DataGrid Grid.Row="1"
 							  ItemsSource="{Binding CommonCollection}"
@@ -141,7 +141,7 @@
 						</DataGrid.Columns>
 
 					</DataGrid>
-			</TabItem>
+			</TabItem>-->
 
 		</TabControl>
 	</Grid>

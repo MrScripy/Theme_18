@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AvaloniaTemplate.Desktop.AppContext;
 using AvaloniaTemplate.Stores;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.EntityFrameworkCore;
 
 namespace AvaloniaTemplate.ViewModels
 {
