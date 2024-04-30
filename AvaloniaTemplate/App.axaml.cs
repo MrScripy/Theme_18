@@ -4,10 +4,12 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using AvaloniaTemplate.Desktop.AppContext;
+using AvaloniaTemplate.Models;
 using AvaloniaTemplate.Services.DbServices.Initialization;
 using AvaloniaTemplate.Services.DialogService;
 using AvaloniaTemplate.Services.NavigationService;
 using AvaloniaTemplate.Stores;
+using AvaloniaTemplate.Stores.Db;
 using AvaloniaTemplate.ViewModels;
 using AvaloniaTemplate.ViewModels.Dialogs.Pages;
 using AvaloniaTemplate.ViewModels.Pages;
@@ -89,6 +91,10 @@ public partial class App : Application
         // Db
         services.AddDbContextFactory<ApplicationContext>();
         services.AddTransient<IDbInitializer, DbInitializer>();
+        services.AddTransient<IRepository<AnimalType>, DbRepository<AnimalType>>();
+        services.AddTransient<IRepository<Amphibian>, DbRepository<Amphibian>>();
+        services.AddTransient<IRepository<Bird>, DbRepository<Bird>>();
+        services.AddTransient<IRepository<Mammal>, DbRepository<Mammal>>();
 
         // services
         services.AddSingleton<NavigationStore>();
