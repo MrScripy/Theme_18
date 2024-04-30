@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace AvaloniaTemplate.Services.DbServices.Initialization
 {
-    public class DB_Initializer : IDB_Initializer
+    public class DbInitializer : IDbInitializer
     {
-        public DB_Initializer(IDbContextFactory<ApplicationContext> contextFactory)
+        public DbInitializer(IDbContextFactory<ApplicationContext> contextFactory)
         {
             _contextFactory = contextFactory;
         }
@@ -19,10 +19,11 @@ namespace AvaloniaTemplate.Services.DbServices.Initialization
         {
             using (var db = _contextFactory.CreateDbContext())
             {
-                await db.Database.EnsureDeletedAsync();
+                await db.Database.EnsureDeletedAsync().ConfigureAwait(false);
 
                 Task? dbCreate = db?.Database.MigrateAsync();
-                if (await db.AnimalTypes.FirstOrDefaultAsync<AnimalType>() == null)
+
+                if (!await db.AnimalTypes.AnyAsync<AnimalType>())               
                 {
                     //Task<List<AnimalType>> typesCreate = CreateAnimalTypes();
                     //Task.WaitAll(dbCreate, typesCreate);

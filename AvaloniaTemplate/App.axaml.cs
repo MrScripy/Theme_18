@@ -36,9 +36,9 @@ public partial class App : Application
     {
         using (var scope = Services?.CreateScope())
         {
-            var dbInitializer = scope?.ServiceProvider.GetRequiredService<IDB_Initializer>();
+            var dbInitializer = scope?.ServiceProvider.GetRequiredService<IDbInitializer>();
             if (dbInitializer != null)
-                await dbInitializer.InitializeAsync();
+                dbInitializer.InitializeAsync().Wait();
         }
 
 
@@ -88,7 +88,7 @@ public partial class App : Application
     {
         // Db
         services.AddDbContextFactory<ApplicationContext>();
-        services.AddTransient<IDB_Initializer, DB_Initializer>();
+        services.AddTransient<IDbInitializer, DbInitializer>();
 
         // services
         services.AddSingleton<NavigationStore>();
@@ -121,4 +121,5 @@ public partial class App : Application
             window.Closing -= MainWindow_OnClosing;
         }
     }
+       
 }

@@ -2,7 +2,7 @@
 
 namespace AvaloniaTemplate.Services.DbServices.Initialization
 {
-    public interface IDB_Initializer
+    public interface IDbInitializer
     {
         Task InitializeAsync();
     }

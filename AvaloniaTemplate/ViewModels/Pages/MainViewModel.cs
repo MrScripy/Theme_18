@@ -46,7 +46,7 @@ public partial class MainViewModel : ViewModelBase
         _dialogService = dialogService;
         _DBFactory = DBfactory;
 
-        BindAnimals();
+        // BindAnimals();
 
     }
 
