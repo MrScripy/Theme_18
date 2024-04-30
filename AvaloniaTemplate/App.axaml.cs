@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using AvaloniaTemplate.Desktop.AppContext;
-using AvaloniaTemplate.Models;
+using AvaloniaTemplate.Services.DbServices.Initialization;
 using AvaloniaTemplate.Services.DialogService;
 using AvaloniaTemplate.Services.NavigationService;
 using AvaloniaTemplate.Stores;
@@ -15,13 +12,11 @@ using AvaloniaTemplate.ViewModels;
 using AvaloniaTemplate.ViewModels.Dialogs.Pages;
 using AvaloniaTemplate.ViewModels.Pages;
 using AvaloniaTemplate.Views;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Splat;
 using Splat.Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace AvaloniaTemplate;
 
@@ -39,12 +34,19 @@ public partial class App : Application
 
     public override async void OnFrameworkInitializationCompleted()
     {
+        using (var scope = Services?.CreateScope())
+        {
+            var dbInitializer = scope?.ServiceProvider.GetRequiredService<IDB_Initializer>();
+            if (dbInitializer != null)
+                await dbInitializer.InitializeAsync();
+        }
+
+
         Window? mainWindow = Services?.GetRequiredService<MainWindow>();
         INavigationService? navigationService =
            Services?.GetRequiredService<NavigationService<NavigationStore, MainViewModel>>();
         navigationService?.Navigate();
 
-        await InitDb();
 
         BindingPlugins.DataValidators.RemoveAt(0);
 
@@ -54,66 +56,12 @@ public partial class App : Application
             desktop.MainWindow?.Show();
         }
 
-        mainWindow.Closing += MainWindow_OnClosing;
+        if (mainWindow != null)
+            mainWindow.Closing += MainWindow_OnClosing;
         base.OnFrameworkInitializationCompleted();
     }
 
-    private async Task InitDb()
-    {
-        using (var db = Services?.GetRequiredService<IDbContextFactory<ApplicationContext>>().CreateDbContext())
-        {
-            Task? dbCreate = db?.Database.MigrateAsync();
-            if (await db.AnimalTypes.FirstOrDefaultAsync<AnimalType>() == null)
-            {
-                //Task<List<AnimalType>> typesCreate = CreateAnimalTypes();
-                //Task.WaitAll(dbCreate, typesCreate);
 
-
-
-                if (await db.Database.CanConnectAsync())
-                {
-                    var amT = new AnimalType() { Name = "Amphibians" };
-                    var bT = new AnimalType() { Name = "Birds" };
-                    var mT = new AnimalType() { Name = "Mammals" };
-
-                    await db.AnimalTypes.AddRangeAsync(amT, bT, mT);
-
-                    await db.Amphibians.AddAsync(
-                        new Amphibian()
-                        {
-                            Name = "A",
-                            LatName = "A",
-                            AnimalType = amT
-                        });
-                    await db.Birds.AddAsync(new Bird()
-                    {
-                        Name = "B",
-                        LatName = "B",
-                        AnimalType = bT
-                    });
-                    await db.Mammals.AddAsync(new Mammal()
-                    {
-                        Name = "M",
-                        LatName = "M",
-                        AnimalType = mT
-                    });
-                    await db.SaveChangesAsync();
-                             
-                }
-
-                await db.SaveChangesAsync();
-            }
-        }
-
-        Task<List<AnimalType>> CreateAnimalTypes() => Task.FromResult(new List<AnimalType>
-        {
-            new AnimalType () { Name = "Amphibians" },
-            new AnimalType () { Name = "Birds" },
-            new AnimalType() { Name = "Mammals" }
-        });
-
-
-    }
 
 
     private void InitializeServices()
@@ -140,6 +88,7 @@ public partial class App : Application
     {
         // Db
         services.AddDbContextFactory<ApplicationContext>();
+        services.AddTransient<IDB_Initializer, DB_Initializer>();
 
         // services
         services.AddSingleton<NavigationStore>();
