@@ -1,4 +1,5 @@
 ﻿using AvaloniaTemplate.Desktop.AppContext;
+using AvaloniaTemplate.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;

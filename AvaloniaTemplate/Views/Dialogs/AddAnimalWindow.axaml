@@ -13,19 +13,28 @@
 	
 	<Grid RowDefinitions="1* 1* 1* 1*" ColumnDefinitions="0.3* 0.7*">
 		<TextBlock Grid.Row="0" Grid.Column="0" Classes="MainTextBlock" HorizontalAlignment="Right">Type</TextBlock>
-		<ComboBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="5 0">
-			<ComboBox.Items>
+		<ComboBox Grid.Row="0" Grid.Column="1"
+              HorizontalAlignment="Stretch" 
+              VerticalAlignment="Center" Margin="5 0" 
+              ItemsSource="{Binding AnimalTypes}"
+              SelectedItem="{Binding SelectedAnimalType}">
+      <ComboBox.ItemTemplate>
+        <DataTemplate>
+          <TextBlock Text="{Binding Name}"/>
+        </DataTemplate>
+      </ComboBox.ItemTemplate>
+			<!--<ComboBox.Items>
 				<ComboBoxItem Content="Mammal"/>
 				<ComboBoxItem Content="Bird"/>
 				<ComboBoxItem Content="Amphibian"/>
-			</ComboBox.Items>
+			</ComboBox.Items>-->
 		</ComboBox>
 
 		<TextBlock Grid.Row="1" Grid.Column="0" Classes="MainTextBlock" HorizontalAlignment="Right">Name</TextBlock>
-		<TextBox Grid.Row="1" Grid.Column="1" Classes="MainTextBox" Text=""/>
+		<TextBox Grid.Row="1" Grid.Column="1" Classes="MainTextBox" Text="{Binding Name}"/>
 		
 		<TextBlock Grid.Row="2" Grid.Column="0" Classes="MainTextBlock" HorizontalAlignment="Right">Lat. Name</TextBlock>
-		<TextBox Grid.Row="2" Grid.Column="1" Classes="MainTextBox" Text=""/>
+		<TextBox Grid.Row="2" Grid.Column="1" Classes="MainTextBox" Text="{Binding LatName}"/>
 
 		<Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
 				Classes="BlueRoundedBtn"
