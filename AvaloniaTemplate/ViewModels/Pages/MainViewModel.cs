@@ -92,17 +92,17 @@ public partial class MainViewModel : ViewModelBase
 
         
 
-        using(var db = ContextFactory.CreateDbContext())
-        {
-            Amphibian test = new()
-            {
-                Name = "Name",
-                LatName = "LatName",
-                AnimalType = db.AnimalTypes.FirstOrDefault(t => t.Id == 1),
-            };
-            db.Amphibians.Add(test);
-            db.SaveChanges();
-        }
+        //using(var db = ContextFactory.CreateDbContext())
+        //{
+        //    Amphibian test = new()
+        //    {
+        //        Name = "Name",
+        //        LatName = "LatName",
+        //        AnimalType = db.AnimalTypes.FirstOrDefault(t => t.Id == 1),
+        //    };
+        //    db.Amphibians.Add(test);
+        //    db.SaveChanges();
+        //}
     }
 
 }
