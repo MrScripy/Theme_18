@@ -12,7 +12,6 @@ namespace AvaloniaTemplate.Stores.Db
         where T : class, IEntity, new()
     {
         private IDbContextFactory<ApplicationContext> _dbContextFactory;
-        private ApplicationContext _db => _dbContextFactory.CreateDbContext();
         private readonly DbSet<T> _dbSet;
 
         public virtual IQueryable<T> Items => _dbSet;
@@ -21,19 +20,26 @@ namespace AvaloniaTemplate.Stores.Db
 
         public T Add(T item)
         {
-            if (item == null) throw new ArgumentNullException("item cannot be null");
-            _db.Entry(item).State = EntityState.Added;
-            if (AutoSaveChanges)
-                _db.SaveChanges();
+            CheckIfNull(item);
+            using (var db = _dbContextFactory.CreateDbContext())
+            {
+                db.Entry(item).State = EntityState.Added;
+                if (AutoSaveChanges)
+                    db.SaveChanges();
+            }
             return item;
         }
 
         public async Task<T> AddAsync(T item, CancellationToken cancellationToken = default)
         {
-            if (item == null) throw new ArgumentNullException("item cannot be null");
-            _db.Entry(item).State = EntityState.Added;
-            if (AutoSaveChanges)
-                await _db.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            CheckIfNull(item);
+            var db = await _dbContextFactory.CreateDbContextAsync();
+            using (db)
+            {
+                db.Entry(item).State = EntityState.Added;
+                if (AutoSaveChanges)
+                    await db.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            }
             return item;
         }
 
@@ -46,38 +52,58 @@ namespace AvaloniaTemplate.Stores.Db
 
         public void Remove(int id)
         {
-            _db.Remove(new T { Id = id });
-            if (AutoSaveChanges)
-                _db.SaveChanges();
+            using (var db = _dbContextFactory.CreateDbContext())
+            {
+                db.Remove(new T { Id = id });
+                if (AutoSaveChanges)
+                    db.SaveChanges();
+            }
         }
 
         public async Task RemoveAsync(int id, CancellationToken cancellationToken = default)
         {
-            _db.Remove(new T { Id = id });
-            if (AutoSaveChanges)
-                await _db.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            var db = await _dbContextFactory.CreateDbContextAsync();
+            using (db)
+            {
+                db.Remove(new T { Id = id });
+                if (AutoSaveChanges)
+                    await db.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            }
         }
 
         public void Update(T item)
         {
-            if (item == null) throw new ArgumentNullException("item cannot be null");
-            _db.Entry(item).State = EntityState.Modified;
-            if (AutoSaveChanges)
-                _db.SaveChanges();
+            CheckIfNull(item);
+
+            using (var db = _dbContextFactory.CreateDbContext())
+            {
+                db.Entry(item).State = EntityState.Modified;
+                if (AutoSaveChanges)
+                    db.SaveChanges();
+            }
         }
 
         public async Task UpdateAsync(T item, CancellationToken cancellationToken = default)
         {
+            CheckIfNull(item);
+            var db = await _dbContextFactory.CreateDbContextAsync();
+            using (db)
+            {
+                db.Entry(item).State = EntityState.Modified;
+                if (AutoSaveChanges)
+                    await db.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+            }
+        }
+
+        private void CheckIfNull(T item)
+        {
             if (item == null) throw new ArgumentNullException("item cannot be null");
-            _db.Entry(item).State = EntityState.Modified;
-            if (AutoSaveChanges)
-                await _db.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
         }
 
         public DbRepository(IDbContextFactory<ApplicationContext> dbContextFactory)
         {
             _dbContextFactory = dbContextFactory;
-            _dbSet = _db.Set<T>();
+            _dbSet = _dbContextFactory.CreateDbContext().Set<T>();
         }
     }
 }

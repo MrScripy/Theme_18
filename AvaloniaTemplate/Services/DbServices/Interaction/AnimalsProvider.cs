@@ -1,50 +1,73 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System;
 using AvaloniaTemplate.Models;
 using AvaloniaTemplate.Stores.Db;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+
 
 namespace AvaloniaTemplate.Services.DbServices.Interaction
 {
-    internal class AnimalsProvider
+    public class AnimalsProvider<T> : IAnimalsProvider<T> where T : class, IAnimal, new()
     {
-        private readonly IRepository<Amphibian> _amphibians;
-        private readonly IRepository<Bird> _birds;
-        private readonly IRepository<Mammal> _mammals;
+        private readonly IRepository<T> _animals;
+        private readonly IRepository<AnimalType> _animalTypes;
 
-        public IEnumerable<Amphibian> Amphibians => _amphibians.Items;
-
-        public IEnumerable<Bird> Birds => _birds.Items;
-        public IEnumerable<Mammal> Mammals => _mammals.Items;
-
-        public T AddAnimal<T>(T animal)
+        public T AddAnimal(T animal)
         {
-            throw new System.NotImplementedException();
+            if (animal == null)
+                throw new Exception($"{animal} can not be null");
+            return _animals.Add(animal);
+        }
+        public async Task<T> AddAnimalAsync(T animal)
+        {
+            if (animal == null)
+                throw new Exception($"{animal} can not be null");
+            return await _animals.AddAsync(animal);
         }
 
-        public void AddAnimal(string name, string latName, AnimalType type)
+        public async Task<T> AddAnimalAsync(string name, string latName)
         {
-            throw new System.NotImplementedException();
-        }
+            if (name == null || latName == null) throw new Exception("name or lat name can not be null");
+            string animalTypeName = typeof(T).Name + "s";
 
-        public Task<T> AddAnimalAsync<T>(T animal)
-        {
-            throw new System.NotImplementedException();
-        }
+            var animalType = await _animalTypes.Items.FirstOrDefaultAsync(t => t.Name == animalTypeName);
 
-        public Task AddAnimalAsync(string name, string latName, string type)
+            if (animalType == null) throw new Exception("there is no a such animal type in DB");
+
+            T newAnimal = new T()
+            {
+                Name = name,
+                LatName = latName,
+                AnimalType = animalType
+            };
+            return await _animals.AddAsync(newAnimal);
+        }
+        public T AddAnimal(string name, string latName)
         {
-            throw new System.NotImplementedException();
+            if (name == null || latName == null) throw new Exception("name or lat name can not be null");
+            string animalTypeName = typeof(T).Name + "s";
+
+            var animalType = _animalTypes.Items.FirstOrDefault(t => t.Name == "Amphibians");
+
+            if (animalType == null) throw new Exception("there is no a such animal type in DB");
+
+            T newAnimal = new T()
+            {
+                Name = name,
+                LatName = latName,
+                AnimalType = animalType
+            };
+            return _animals.Add(newAnimal);
         }
 
         public AnimalsProvider(
-            IRepository<Amphibian> amphibians,
-            IRepository<Bird> birds,
-            IRepository<Mammal> mammals
+            IRepository<T> animals,
+            IRepository<AnimalType> animalTypes
             )
         {
-            this._amphibians = amphibians;
-            this._birds = birds;
-            this._mammals = mammals;
+            _animals = animals;
+            _animalTypes = animalTypes;
         }
     }
 }

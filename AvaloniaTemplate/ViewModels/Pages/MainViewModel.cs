@@ -1,6 +1,7 @@
 ﻿using AvaloniaTemplate.Desktop.AppContext;
 using AvaloniaTemplate.Models;
 using AvaloniaTemplate.Models.Factory;
+using AvaloniaTemplate.Services.DbServices.Interaction;
 using AvaloniaTemplate.Services.DialogService;
 using AvaloniaTemplate.Services.NavigationService;
 using AvaloniaTemplate.Stores;
@@ -10,6 +11,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,10 +22,9 @@ public partial class MainViewModel : ViewModelBase
     private INavigationService _navigationService;
     private IDialogService _dialogService;
     private readonly IRepository<AnimalType> _animalTypeRepository;
-    private readonly IRepository<Mammal> _mammalsRepository;
-    private readonly IRepository<Amphibian> _amphibiansRepository;
-    private readonly IRepository<Bird> _birdsRepository;
-
+    private readonly IAnimalsProvider<Amphibian> _amphibianProvider;
+    private readonly IAnimalsProvider<Bird> _birdProvider;
+    private readonly IAnimalsProvider<Mammal> _mammalProvider;
     [ObservableProperty]
     private List<Amphibian> _amphibians = new();
     [ObservableProperty]
@@ -40,23 +41,26 @@ public partial class MainViewModel : ViewModelBase
     public MainViewModel(
         NavigationService<NavigationStore, AnotherPageViewModel> navigationService,
         IDialogService dialogService,
-        IRepository<AnimalType> animalTypeRepository,
-        IRepository<Mammal> mammalsRepository,
-        IRepository<Amphibian> amphibiansRepository,
-        IRepository<Bird> birdsRepository,
+        IRepository<AnimalType> animalTypeRepository,       
+        IAnimalsProvider<Amphibian> amphibianProvider,
+        IAnimalsProvider<Bird> birdProvider,
+        IAnimalsProvider<Mammal> mammalProvider,
         IDbContextFactory<ApplicationContext> contextFactory
         )
     {
         _navigationService = navigationService;
         _dialogService = dialogService;
+
         _animalTypeRepository = animalTypeRepository;
-        _mammalsRepository = mammalsRepository;
-        _amphibiansRepository = amphibiansRepository;
-        _birdsRepository = birdsRepository;
+        _amphibianProvider = amphibianProvider;
+        _birdProvider = birdProvider;
+        _mammalProvider = mammalProvider;
+
         ContextFactory = contextFactory;
-        Mammals = _mammalsRepository.Items.ToList();
-        Amphibians = _amphibiansRepository.Items.ToList();
-        Birds = _birdsRepository.Items.ToList();
+
+        //Mammals = _mammalsRepository.Items.ToList();
+        //Amphibians = _amphibiansRepository.Items.ToList();
+        //Birds = _birdsRepository.Items.ToList();
 
     }
 
@@ -69,40 +73,31 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private async Task AddAnimal()
     {
-       // var animal = await _dialogService.ShowDialogAsync<Animal>(nameof(AddAnimalWindowViewModel));
-        //if (animal is Amphibian)
-        //{
-        //    var newAnimal = (Amphibian)animal;            
-        //    await _amphibiansRepository.AddAsync(newAnimal);
-        //    Amphibians.Add(newAnimal);
+        var animal = await _dialogService.ShowDialogAsync<Animal>(nameof(AddAnimalWindowViewModel));
+        if (animal == null) return;
+            
 
-        //}
-        //else if (animal is Bird)
-        //{
-        //    await _birdsRepository.AddAsync((Bird)animal);
-        //    Birds.Add((Bird)animal);
-        //}
-        //else if (animal is Mammal)
-        //{
-        //    await _mammalsRepository.AddAsync((Mammal)animal);
-        //    Mammals.Add((Mammal)animal);
-        //}
-        
-        //_amphibiansRepository.Add(test);
-
-        
-
-        //using(var db = ContextFactory.CreateDbContext())
-        //{
-        //    Amphibian test = new()
-        //    {
-        //        Name = "Name",
-        //        LatName = "LatName",
-        //        AnimalType = db.AnimalTypes.FirstOrDefault(t => t.Id == 1),
-        //    };
-        //    db.Amphibians.Add(test);
-        //    db.SaveChanges();
-        //}
+        using (var db = ContextFactory.CreateDbContext())
+        {
+            
+           // var animalType = await db.AnimalTypes.FirstOrDefaultAsync(t => t.Name == animal.GetType().Name + "s");
+           var animalType = animal.GetType().Name;
+            switch (animalType)
+            {
+                case "Amphibian":
+                    await _amphibianProvider.AddAnimalAsync(animal as Amphibian);
+                    break;
+                case "Bird":
+                    await _birdProvider.AddAnimalAsync(animal as Bird);
+                    break;
+                case "Mammal":
+                    await _mammalProvider.AddAnimalAsync(animal as Mammal);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
-
 }
+
+

@@ -20,16 +20,13 @@ namespace AvaloniaTemplate.Services.DbServices.Initialization
         {
             using (var db = _contextFactory.CreateDbContext())
             {
-                 // await db.Database.EnsureDeletedAsync().ConfigureAwait(false);
+                await db.Database.EnsureDeletedAsync().ConfigureAwait(false);
 
                 Task? dbCreate = db?.Database.MigrateAsync();
 
                 if (!await db.AnimalTypes.AnyAsync<AnimalType>())
                 {
-                    //Task<List<AnimalType>> typesCreate = CreateAnimalTypes();
-                    //Task.WaitAll(dbCreate, typesCreate);
-
-
+                    dbCreate?.Wait();
 
                     if (await db.Database.CanConnectAsync())
                     {

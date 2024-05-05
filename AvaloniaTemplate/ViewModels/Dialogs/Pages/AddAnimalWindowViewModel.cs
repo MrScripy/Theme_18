@@ -3,6 +3,7 @@ using AvaloniaTemplate.Stores.Db;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace AvaloniaTemplate.ViewModels.Dialogs.Pages
@@ -15,22 +16,24 @@ namespace AvaloniaTemplate.ViewModels.Dialogs.Pages
         private Animal _animal;
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(AddAnimalCommand))]
         private string _name;
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(AddAnimalCommand))]
         private string _latName;
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(AddAnimalCommand))]
         private AnimalType _selectedAnimalType;
 
         [RelayCommand(CanExecute = nameof(CanAddAnimal))]
         private void AddAnimal()
         {
             if (SelectedAnimalType == null) return;
+
             if (SelectedAnimalType.Name == "Amphibians")
-            {
-                _animal = new Amphibian();                
-            }
+                _animal = new Amphibian();
             else if (SelectedAnimalType.Name == "Birds")
                 _animal = new Bird();
             else if (SelectedAnimalType.Name == "Mammals")
@@ -43,14 +46,15 @@ namespace AvaloniaTemplate.ViewModels.Dialogs.Pages
             Close(_animal);
         }
 
-        private bool CanAddAnimal() => true;
-            //!string.IsNullOrEmpty(Name)
-            //&& !string.IsNullOrEmpty(LatName)
-            //&& SelectedAnimalType != null;
+        private bool CanAddAnimal() =>
+            !string.IsNullOrEmpty(Name)
+            && !string.IsNullOrEmpty(LatName)
+            && SelectedAnimalType != null;
+
 
         public AddAnimalWindowViewModel(IRepository<AnimalType> animalTypeRepository)
         {
-            _animalTypeRepository = animalTypeRepository;           
+            _animalTypeRepository = animalTypeRepository;
         }
     }
 }

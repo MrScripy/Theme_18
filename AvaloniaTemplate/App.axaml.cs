@@ -6,6 +6,7 @@ using Avalonia.Markup.Xaml;
 using AvaloniaTemplate.Desktop.AppContext;
 using AvaloniaTemplate.Models;
 using AvaloniaTemplate.Services.DbServices.Initialization;
+using AvaloniaTemplate.Services.DbServices.Interaction;
 using AvaloniaTemplate.Services.DialogService;
 using AvaloniaTemplate.Services.NavigationService;
 using AvaloniaTemplate.Stores;
@@ -95,6 +96,10 @@ public partial class App : Application
         services.AddTransient<IRepository<Amphibian>, DbRepository<Amphibian>>();
         services.AddTransient<IRepository<Bird>, DbRepository<Bird>>();
         services.AddTransient<IRepository<Mammal>, DbRepository<Mammal>>();
+
+        services.AddTransient<IAnimalsProvider<Amphibian>, AnimalsProvider<Amphibian>>();
+        services.AddTransient<IAnimalsProvider<Bird>, AnimalsProvider<Bird>>();
+        services.AddTransient<IAnimalsProvider<Mammal>, AnimalsProvider<Mammal>>();
 
         // services
         services.AddSingleton<NavigationStore>();
