@@ -23,7 +23,7 @@
 
 		<StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="20" HorizontalAlignment="Center">
 			<Button Classes="BlueRoundedBtn" FontSize="12" Content="Add animal" Command="{Binding AddAnimalCommand}"/>
-			<Button Classes="BlueRoundedBtn" Content="Save pdf" FontSize="12"/>
+			<Button Classes="BlueRoundedBtn" Content="Save pdf" FontSize="12" />
 			<Button Classes="BlueRoundedBtn" Content="Save txt" FontSize="12"/>
 		</StackPanel>
 		

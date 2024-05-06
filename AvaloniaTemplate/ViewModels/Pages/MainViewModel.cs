@@ -11,8 +11,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace AvaloniaTemplate.ViewModels.Pages;
@@ -26,11 +25,11 @@ public partial class MainViewModel : ViewModelBase
     private readonly IAnimalsProvider<Bird> _birdProvider;
     private readonly IAnimalsProvider<Mammal> _mammalProvider;
     [ObservableProperty]
-    private List<Amphibian> _amphibians = new();
+    private ObservableCollection<Amphibian> _amphibians = new();
     [ObservableProperty]
-    private List<Mammal> _mammals = new();
+    private ObservableCollection<Mammal> _mammals = new();
     [ObservableProperty]
-    private List<Bird> _birds = new();
+    private ObservableCollection<Bird> _birds = new();
 
     private Factory _factory;
 
@@ -83,13 +82,19 @@ public partial class MainViewModel : ViewModelBase
             switch (animalType)
             {
                 case "Amphibian":
-                    await _amphibianProvider.AddAnimalAsync(animal as Amphibian);
+                    var newAmphibian = animal as Amphibian;
+                    Amphibians.Add(newAmphibian);
+                    await _amphibianProvider.AddAnimalAsync(newAmphibian);
                     break;
                 case "Bird":
-                    await _birdProvider.AddAnimalAsync(animal as Bird);
+                    var newBird = animal as Bird;
+                    Birds.Add(newBird);
+                    await _birdProvider.AddAnimalAsync(newBird);
                     break;
                 case "Mammal":
-                    await _mammalProvider.AddAnimalAsync(animal as Mammal);
+                    var newMammal = animal as Mammal;
+                    Mammals.Add(newMammal);
+                    await _mammalProvider.AddAnimalAsync(newMammal);
                     break;
                 default:
                     break;
@@ -100,10 +105,17 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand]
     private async Task LoadData()
     {
-        Mammals = await _mammalProvider.Animals.ToListAsync();            
-        Amphibians = await _amphibianProvider.Animals.ToListAsync();
-        Birds = await _birdProvider.Animals.ToListAsync();
+        foreach (var animal in _mammalProvider.Animals)
+            Mammals.Add(animal);
+        
+        foreach (var animal in _amphibianProvider.Animals)
+            Amphibians.Add(animal);
+
+        foreach(var animal in _birdProvider.Animals)
+            Birds.Add(animal);
     }
+
+    
 }
 
 
