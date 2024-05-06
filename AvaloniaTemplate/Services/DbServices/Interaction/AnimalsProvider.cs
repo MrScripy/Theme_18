@@ -4,6 +4,7 @@ using AvaloniaTemplate.Stores.Db;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Collections.Generic;
 
 
 namespace AvaloniaTemplate.Services.DbServices.Interaction
@@ -13,6 +14,7 @@ namespace AvaloniaTemplate.Services.DbServices.Interaction
         private readonly IRepository<T> _animals;
         private readonly IRepository<AnimalType> _animalTypes;
 
+        public IQueryable<T> Animals => _animals.Items;
         public T AddAnimal(T animal)
         {
             if (animal == null)

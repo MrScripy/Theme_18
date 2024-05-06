@@ -3,14 +3,20 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:AvaloniaTemplate.ViewModels.Pages"
+             xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+             xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
              mc:Ignorable="d" 
-			 d:DesignWidth="1000" d:DesignHeight="600"
+             d:DesignWidth="1000" d:DesignHeight="600"
 			 
              x:Class="AvaloniaTemplate.Views.Pages.MainView"
              x:DataType="vm:MainViewModel"
-			 Background="{StaticResource GradientBack}"
-			 >
-
+             Background="{StaticResource GradientBack}"
+             >
+  <i:Interaction.Behaviors>
+    <ia:EventTriggerBehavior EventName="Loaded">
+      <ia:InvokeCommandAction Command="{Binding LoadDataCommand}"/>
+    </ia:EventTriggerBehavior>
+  </i:Interaction.Behaviors>
 
 	<Grid RowDefinitions="0.1* 0.07* 0.8* ">
 		<TextBlock Classes="MainTextBlock" Grid.Row="0" Text="Animals" FontSize="26"/>

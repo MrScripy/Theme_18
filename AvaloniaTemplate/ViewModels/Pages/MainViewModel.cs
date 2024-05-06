@@ -41,7 +41,7 @@ public partial class MainViewModel : ViewModelBase
     public MainViewModel(
         NavigationService<NavigationStore, AnotherPageViewModel> navigationService,
         IDialogService dialogService,
-        IRepository<AnimalType> animalTypeRepository,       
+        IRepository<AnimalType> animalTypeRepository,
         IAnimalsProvider<Amphibian> amphibianProvider,
         IAnimalsProvider<Bird> birdProvider,
         IAnimalsProvider<Mammal> mammalProvider,
@@ -58,9 +58,7 @@ public partial class MainViewModel : ViewModelBase
 
         ContextFactory = contextFactory;
 
-        //Mammals = _mammalsRepository.Items.ToList();
-        //Amphibians = _amphibiansRepository.Items.ToList();
-        //Birds = _birdsRepository.Items.ToList();
+
 
     }
 
@@ -75,13 +73,13 @@ public partial class MainViewModel : ViewModelBase
     {
         var animal = await _dialogService.ShowDialogAsync<Animal>(nameof(AddAnimalWindowViewModel));
         if (animal == null) return;
-            
+
 
         using (var db = ContextFactory.CreateDbContext())
         {
-            
-           // var animalType = await db.AnimalTypes.FirstOrDefaultAsync(t => t.Name == animal.GetType().Name + "s");
-           var animalType = animal.GetType().Name;
+
+            // var animalType = await db.AnimalTypes.FirstOrDefaultAsync(t => t.Name == animal.GetType().Name + "s");
+            var animalType = animal.GetType().Name;
             switch (animalType)
             {
                 case "Amphibian":
@@ -97,6 +95,14 @@ public partial class MainViewModel : ViewModelBase
                     break;
             }
         }
+    }
+
+    [RelayCommand]
+    private async Task LoadData()
+    {
+        Mammals = await _mammalProvider.Animals.ToListAsync();            
+        Amphibians = await _amphibianProvider.Animals.ToListAsync();
+        Birds = await _birdProvider.Animals.ToListAsync();
     }
 }
 
