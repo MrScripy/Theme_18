@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AvaloniaTemplate.Desktop.AppContext;
 using AvaloniaTemplate.Stores;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.EntityFrameworkCore;
 
 namespace AvaloniaTemplate.ViewModels
 {
     public partial class MainWindowViewModel : ViewModelBase    
     {
         [ObservableProperty]
-        private string _windowTitle = "Window Title";
+        private string _windowTitle = "Animals";
         
         private NavigationStore _navigationStore;
         public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;

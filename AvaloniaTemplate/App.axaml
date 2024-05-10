@@ -16,6 +16,8 @@
         <FluentTheme />
 		<materialIcons:MaterialIconStyles/>
 		<StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml"/>
-
+		<StyleInclude Source="/Styles/ButtonStyles.axaml"/>
+		<StyleInclude Source="/Styles/TextStyles.axaml"/>
+		<StyleInclude Source="/Styles/DGStyles.axaml"/>
 	</Application.Styles>
 </Application>

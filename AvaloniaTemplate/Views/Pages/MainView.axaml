@@ -3,15 +3,154 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:AvaloniaTemplate.ViewModels.Pages"
+             xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+             xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
              mc:Ignorable="d" 
-			 d:DesignWidth="800" d:DesignHeight="450"
+             d:DesignWidth="1000" d:DesignHeight="600"
 			 
              x:Class="AvaloniaTemplate.Views.Pages.MainView"
-             x:DataType="vm:MainViewModel">
+             x:DataType="vm:MainViewModel"
+             Background="{StaticResource GradientBack}"
+             >
+  <i:Interaction.Behaviors>
+    <ia:EventTriggerBehavior EventName="Loaded">
+      <ia:InvokeCommandAction Command="{Binding LoadDataCommand}"/>
+    </ia:EventTriggerBehavior>
+  </i:Interaction.Behaviors>
 
+	<Grid RowDefinitions="0.1* 0.07* 0.8* ">
+		<TextBlock Classes="MainTextBlock" Grid.Row="0" Text="Animals" FontSize="26"/>
 
-	<Grid RowDefinitions="1* 1* 1*">
+		<StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="20" HorizontalAlignment="Center">
+			<Button Classes="BlueRoundedBtn" FontSize="12" Content="Add animal" Command="{Binding AddAnimalCommand}"/>
+			<Button Classes="BlueRoundedBtn" FontSize="12" Content="Remove animal" Command="{Binding RemoveAnimalCommand}"/>
+			<Button Classes="BlueRoundedBtn" FontSize="12" Content="Change animal" Command="{Binding ChangeAnimalCommand}"/>
+			<Button Classes="BlueRoundedBtn" Content="Save txt" FontSize="12" Command="{Binding SaveCommand}" />
+		</StackPanel>
 		
+		<TabControl Grid.Row="2" Margin="40 0" SelectedIndex="{Binding SelectedTabItem}">
+			<TabControl.Styles>
+				<Style Selector="TabItem">
+					<Setter Property="FontSize" Value="15"/>
+				</Style>
+			</TabControl.Styles>
+			<TabControl.ItemsPanel>
+				<ItemsPanelTemplate>
+					<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Spacing="10" Margin="0 0 0 20"/>
+				</ItemsPanelTemplate>
+			</TabControl.ItemsPanel>
+
+			<!--Mammals-->
+			<TabItem Header="Mammals">				
+					<DataGrid Grid.Row="1"
+							  ItemsSource="{Binding Mammals}" 
+							  SelectedItem="{Binding SelectedAnimal}"
+							  AutoGenerateColumns="False" 
+							  VerticalAlignment="Stretch" 
+							  HorizontalAlignment="Stretch"
+							  IsReadOnly="True"							  
+							  >
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Name"
+														Binding="{Binding Name}"
+														Width="*"														
+														CanUserSort="True"
+													/>
+							<DataGridTextColumn Header="Lat.Name"
+														Binding="{Binding LatName}"
+														Width="*"														
+														CanUserSort="True"
+													/>
+						</DataGrid.Columns>
+						
+					</DataGrid>
+			</TabItem>
+
+			<!--Birds-->
+			<TabItem Header="Birds">				
+					<DataGrid Grid.Row="1"
+							  ItemsSource="{Binding Birds}"
+							  SelectedItem="{Binding SelectedAnimal}"
+							  AutoGenerateColumns="False"
+							  VerticalAlignment="Stretch"
+							  HorizontalAlignment="Stretch"
+							  IsReadOnly="True"						  
+							  >
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Name"
+														Binding="{Binding Name}"
+														Width="*"
+														CanUserSort="True"
+													/>
+							<DataGridTextColumn Header="Lat.Name"
+														Binding="{Binding LatName}"
+														Width="*"
+														CanUserSort="True"
+													/>
+						</DataGrid.Columns>
+
+					</DataGrid>
+			</TabItem>
+
+			<!--Amphibians-->
+			<TabItem Header="Amphibians">				
+					<DataGrid Grid.Row="1"
+							  ItemsSource="{Binding Amphibians}"
+							  SelectedItem="{Binding SelectedAnimal}"
+							  AutoGenerateColumns="False"
+							  VerticalAlignment="Stretch"
+							  HorizontalAlignment="Stretch"
+							  IsReadOnly="True"							  
+							  >
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Name"
+														Binding="{Binding Name}"
+														Width="*"
+														CanUserSort="True"
+													/>
+							<DataGridTextColumn Header="Lat.Name"
+														Binding="{Binding LatName}"
+														Width="*"
+														CanUserSort="True"
+													/>
+						</DataGrid.Columns>
+
+					</DataGrid>
+			</TabItem>
+
+			<!--All--><!--
+			<TabItem Header="All">			
+					<DataGrid Grid.Row="1"
+							  ItemsSource="{Binding CommonCollection}"
+							  SelectedItem="{}"
+							  AutoGenerateColumns="False"
+							  VerticalAlignment="Stretch"
+							  HorizontalAlignment="Stretch"
+							  IsReadOnly="True"
+							  >
+						<DataGrid.Columns>
+							<DataGridTextColumn Header="Type"
+														Binding="{Binding Type}"
+														Width="*"
+														CanUserSort="True"
+													/>
+							<DataGridTextColumn Header="Name"
+														Binding="{Binding Name}"
+														Width="*"
+														CanUserSort="True"
+													/>
+							<DataGridTextColumn Header="Lat.Name"
+														Binding="{Binding LatName}"
+														Width="*"
+														CanUserSort="True"
+													/>
+							
+						</DataGrid.Columns>
+
+					</DataGrid>
+			</TabItem>-->
+
+		</TabControl>
 	</Grid>
 
 

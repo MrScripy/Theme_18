@@ -1,0 +1,48 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:vm="clr-namespace:AvaloniaTemplate.ViewModels.Dialogs.Pages;assembly=AvaloniaTemplate"
+        mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="250"
+		Width="300" Height="250"
+        x:Class="AvaloniaTemplate.Views.Dialogs.AddAnimalWindow"
+        Title=""
+		x:DataType="vm:AddAnimalWindowViewModel"
+		CanResize="False"
+		>
+	
+	<Grid RowDefinitions="1* 1* 1* 1*" ColumnDefinitions="0.3* 0.7*">
+		<TextBlock Grid.Row="0" Grid.Column="0" Classes="MainTextBlock" HorizontalAlignment="Right">Type</TextBlock>
+		<ComboBox Grid.Row="0" Grid.Column="1"
+              HorizontalAlignment="Stretch" 
+              VerticalAlignment="Center" Margin="5 0" 
+              ItemsSource="{Binding AnimalTypes}"
+              SelectedItem="{Binding SelectedAnimalType}">
+      <ComboBox.ItemTemplate>
+        <DataTemplate>
+          <TextBlock Text="{Binding Name}"/>
+        </DataTemplate>
+      </ComboBox.ItemTemplate>
+			<!--<ComboBox.Items>
+				<ComboBoxItem Content="Mammal"/>
+				<ComboBoxItem Content="Bird"/>
+				<ComboBoxItem Content="Amphibian"/>
+			</ComboBox.Items>-->
+		</ComboBox>
+
+		<TextBlock Grid.Row="1" Grid.Column="0" Classes="MainTextBlock" HorizontalAlignment="Right">Name</TextBlock>
+		<TextBox Grid.Row="1" Grid.Column="1" Classes="MainTextBox" Text="{Binding Name}"/>
+		
+		<TextBlock Grid.Row="2" Grid.Column="0" Classes="MainTextBlock" HorizontalAlignment="Right">Lat. Name</TextBlock>
+		<TextBox Grid.Row="2" Grid.Column="1" Classes="MainTextBox" Text="{Binding LatName}"/>
+
+		<Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"
+				Classes="BlueRoundedBtn"
+				HorizontalAlignment="Center" 
+				VerticalAlignment="Center"
+				Content="Add"
+				Command="{Binding AddAnimalCommand}"
+				/>
+	</Grid>
+
+</Window>
