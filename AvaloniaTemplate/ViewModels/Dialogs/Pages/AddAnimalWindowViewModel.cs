@@ -1,9 +1,8 @@
 ﻿using AvaloniaTemplate.Models;
+using AvaloniaTemplate.Models.Factory;
 using AvaloniaTemplate.Stores.Db;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace AvaloniaTemplate.ViewModels.Dialogs.Pages
@@ -33,11 +32,11 @@ namespace AvaloniaTemplate.ViewModels.Dialogs.Pages
             if (SelectedAnimalType == null) return;
 
             if (SelectedAnimalType.Name == "Amphibians")
-                _animal = new Amphibian();
+                _animal = new AmphibianFactory().Create();
             else if (SelectedAnimalType.Name == "Birds")
-                _animal = new Bird();
+                _animal = new BirdFactory().Create();
             else if (SelectedAnimalType.Name == "Mammals")
-                _animal = new Mammal();
+                _animal = new MammalFactory().Create();
 
             _animal.Name = Name;
             _animal.LatName = LatName;
