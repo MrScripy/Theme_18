@@ -3,6 +3,7 @@ using AvaloniaTemplate.Models;
 using AvaloniaTemplate.Models.Factory;
 using AvaloniaTemplate.Services.DbServices.Interaction;
 using AvaloniaTemplate.Services.DialogService;
+using AvaloniaTemplate.Services.FileServices;
 using AvaloniaTemplate.Services.NavigationService;
 using AvaloniaTemplate.Stores;
 using AvaloniaTemplate.Stores.Db;
@@ -10,8 +11,8 @@ using AvaloniaTemplate.ViewModels.Dialogs.Pages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace AvaloniaTemplate.ViewModels.Pages;
@@ -24,12 +25,15 @@ public partial class MainViewModel : ViewModelBase
     private readonly IAnimalsProvider<Amphibian> _amphibianProvider;
     private readonly IAnimalsProvider<Bird> _birdProvider;
     private readonly IAnimalsProvider<Mammal> _mammalProvider;
+    private readonly IFilesProvider _filesProvider;
     [ObservableProperty]
     private ObservableCollection<Amphibian> _amphibians = new();
     [ObservableProperty]
     private ObservableCollection<Mammal> _mammals = new();
     [ObservableProperty]
     private ObservableCollection<Bird> _birds = new();
+    [ObservableProperty]
+    private int _selectedTabItem;
 
     private Factory _factory;
 
@@ -44,7 +48,8 @@ public partial class MainViewModel : ViewModelBase
         IAnimalsProvider<Amphibian> amphibianProvider,
         IAnimalsProvider<Bird> birdProvider,
         IAnimalsProvider<Mammal> mammalProvider,
-        IDbContextFactory<ApplicationContext> contextFactory
+        IDbContextFactory<ApplicationContext> contextFactory,
+        IFilesProvider filesProvider
         )
     {
         _navigationService = navigationService;
@@ -56,9 +61,7 @@ public partial class MainViewModel : ViewModelBase
         _mammalProvider = mammalProvider;
 
         ContextFactory = contextFactory;
-
-
-
+        _filesProvider = filesProvider;
     }
 
     [RelayCommand]
@@ -107,15 +110,33 @@ public partial class MainViewModel : ViewModelBase
     {
         foreach (var animal in _mammalProvider.Animals)
             Mammals.Add(animal);
-        
+
         foreach (var animal in _amphibianProvider.Animals)
             Amphibians.Add(animal);
 
-        foreach(var animal in _birdProvider.Animals)
+        foreach (var animal in _birdProvider.Animals)
             Birds.Add(animal);
     }
 
-    
+    [RelayCommand]
+    private async Task Save()
+    {
+        switch (SelectedTabItem)
+        {
+            case 0:
+                await _filesProvider.SaveReportAsync(Mammals);
+                break;
+            case 1:
+                await _filesProvider.SaveReportAsync(Birds);
+                break;
+            case 2:
+                await _filesProvider.SaveReportAsync(Amphibians);
+                break;
+            default:
+                break;
+        }
+
+    }
 }
 
 

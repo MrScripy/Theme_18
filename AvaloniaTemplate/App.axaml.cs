@@ -8,6 +8,7 @@ using AvaloniaTemplate.Models;
 using AvaloniaTemplate.Services.DbServices.Initialization;
 using AvaloniaTemplate.Services.DbServices.Interaction;
 using AvaloniaTemplate.Services.DialogService;
+using AvaloniaTemplate.Services.FileServices;
 using AvaloniaTemplate.Services.NavigationService;
 using AvaloniaTemplate.Stores;
 using AvaloniaTemplate.Stores.Db;
@@ -110,6 +111,8 @@ public partial class App : Application
         services.AddSingleton<Func<AnotherPageViewModel>>(s => () => s.GetRequiredService<AnotherPageViewModel>());
 
         services.AddSingleton<IDialogService, DialogService>();
+        services.AddSingleton<IDialogFilesService, DialogFilesService>();
+        services.AddSingleton<IFilesProvider, FilesProvider>();
 
         // view models
         services.AddTransient<FirstDialogWindowViewModel>();
