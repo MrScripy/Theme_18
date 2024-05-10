@@ -19,7 +19,6 @@ namespace AvaloniaTemplate.ViewModels.Pages;
 
 public partial class MainViewModel : ViewModelBase
 {
-    private INavigationService _navigationService;
     private IDialogService _dialogService;
     private readonly IRepository<AnimalType> _animalTypeRepository;
     private readonly IAnimalsProvider<Amphibian> _amphibianProvider;
@@ -45,7 +44,6 @@ public partial class MainViewModel : ViewModelBase
     public MainViewModel() { }
 
     public MainViewModel(
-        NavigationService<NavigationStore, AnotherPageViewModel> navigationService,
         IDialogService dialogService,
         IRepository<AnimalType> animalTypeRepository,
         IAnimalsProvider<Amphibian> amphibianProvider,
@@ -55,7 +53,6 @@ public partial class MainViewModel : ViewModelBase
         IFilesProvider filesProvider
         )
     {
-        _navigationService = navigationService;
         _dialogService = dialogService;
 
         _animalTypeRepository = animalTypeRepository;
@@ -65,13 +62,7 @@ public partial class MainViewModel : ViewModelBase
 
         ContextFactory = contextFactory;
         _filesProvider = filesProvider;
-    }
-
-    [RelayCommand]
-    private void Navigate()
-    {
-        _navigationService.Navigate();
-    }
+    }     
 
     [RelayCommand]
     private async Task AddAnimal()
@@ -135,7 +126,7 @@ public partial class MainViewModel : ViewModelBase
         }
     }
 
-    [RelayCommand(CanExecute = nameof(CanRemoveAnimal))]
+    [RelayCommand(CanExecute = nameof(CanChangeOrRemoveAnimal))]
     private async Task RemoveAnimalAsync()
     {
         var animalType = SelectedAnimal.GetType().Name;
@@ -160,7 +151,12 @@ public partial class MainViewModel : ViewModelBase
                 break;
         }
     }
-    private bool CanRemoveAnimal() => SelectedAnimal == null ? false : true;
+    [RelayCommand(CanExecute = nameof(CanChangeOrRemoveAnimal))]
+    private async Task ChangeAnimalAsync()
+    {
+
+    }
+    private bool CanChangeOrRemoveAnimal() => SelectedAnimal == null ? false : true;
 }
 
 
