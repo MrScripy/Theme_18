@@ -1,11 +1,10 @@
-using Avalonia.Controls;
 using AvaloniaTemplate.Models;
 
 namespace AvaloniaTemplate.Views.Dialogs
 {
-    public partial class AddAnimalWindow : DialogWindowBase<Animal>
+    public partial class ChangeAnimalDialogWindow : DialogWindowBase<Animal>
     {
-        public AddAnimalWindow()
+        public ChangeAnimalDialogWindow()
         {
             InitializeComponent();
         }
