@@ -19,10 +19,6 @@
 		<DataTemplate DataType="{x:Type pages:MainViewModel}">
 			<views:MainView/>
 		</DataTemplate>
-
-		<DataTemplate DataType="{x:Type pages:AnotherPageViewModel}">
-			<views:AnotherPage/>
-		</DataTemplate>
 	</Window.DataTemplates>
         
 	<ContentControl Content="{Binding CurrentViewModel}"/>

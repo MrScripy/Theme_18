@@ -50,4 +50,10 @@
       <SubType>Designer</SubType>
     </AvaloniaXaml>
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\Dialogs\ChangeAnimalDialogWindow.axaml.cs">
+      <DependentUpon>ChangeAnimalDialogWindow.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
 </Project>

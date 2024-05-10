@@ -1,0 +1,36 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+				xmlns:vm="clr-namespace:AvaloniaTemplate.ViewModels.Dialogs.Pages;assembly=AvaloniaTemplate"
+        mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="300"
+				Width="300" Height="300"
+				CanResize="False"
+        x:Class="AvaloniaTemplate.Views.Dialogs.ChangeAnimalDialogWindow"
+				x:DataType="vm:ChangeAnimalDialogWindowViewModel"
+        Title="ChangeAnimalDialogWindow"
+        >
+
+	<Grid RowDefinitions="0.2* 0.6* 0.2*" >
+		
+		<TextBlock Classes="MainTextBlock"
+               Text="Change Animal"
+               HorizontalAlignment="Center" 
+               VerticalAlignment="Center"/>
+
+    <Grid Grid.Row="1" RowDefinitions="* *" ColumnDefinitions="* *">
+      <TextBlock Classes="MainTextBlock">Name</TextBlock>
+      <TextBlock Classes="MainTextBlock" Grid.Row="1">LatName</TextBlock>
+
+      <TextBox Classes="MainTextBox" Grid.Row="0" Grid.Column="1" Text="{Binding Name}"/>
+      <TextBox Classes="MainTextBox" Grid.Row="1" Grid.Column="1" Text="{Binding LatName}"/>
+    </Grid>
+
+    <Button Classes="BlueRoundedBtn" Grid.Row="2" 
+            HorizontalAlignment="Center" VerticalAlignment="Center"
+            Content="Save changes"
+            Command="{Binding ChangeAnimalCommand}"
+            />
+		
+	</Grid>
+</Window>

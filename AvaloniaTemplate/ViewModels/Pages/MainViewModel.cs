@@ -4,15 +4,13 @@ using AvaloniaTemplate.Models.Factory;
 using AvaloniaTemplate.Services.DbServices.Interaction;
 using AvaloniaTemplate.Services.DialogService;
 using AvaloniaTemplate.Services.FileServices;
-using AvaloniaTemplate.Services.NavigationService;
-using AvaloniaTemplate.Stores;
 using AvaloniaTemplate.Stores.Db;
 using AvaloniaTemplate.ViewModels.Dialogs.Pages;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace AvaloniaTemplate.ViewModels.Pages;
@@ -33,7 +31,10 @@ public partial class MainViewModel : ViewModelBase
     private ObservableCollection<Bird> _birds = new();
     [ObservableProperty]
     private int _selectedTabItem;
+
     [NotifyCanExecuteChangedFor(nameof(RemoveAnimalCommand))]
+    [NotifyCanExecuteChangedFor(nameof(ChangeAnimalCommand))]
+    [NotifyCanExecuteChangedFor(nameof(ChangeAnimalCommand))]
     [ObservableProperty]
     private Animal _selectedAnimal;
 
@@ -62,7 +63,7 @@ public partial class MainViewModel : ViewModelBase
 
         ContextFactory = contextFactory;
         _filesProvider = filesProvider;
-    }     
+    }
 
     [RelayCommand]
     private async Task AddAnimal()
@@ -154,6 +155,36 @@ public partial class MainViewModel : ViewModelBase
     [RelayCommand(CanExecute = nameof(CanChangeOrRemoveAnimal))]
     private async Task ChangeAnimalAsync()
     {
+        var resultAnimal = await _dialogService.ShowDialogAsync<Animal, Animal>(
+            nameof(ChangeAnimalDialogWindowViewModel), SelectedAnimal);
+
+        var animalType = resultAnimal.GetType().Name;
+        switch (animalType)
+        {
+            case "Amphibian":
+                Amphibians = new();
+                var newAmphibian = resultAnimal as Amphibian;
+                await _amphibianProvider.UpdateAnimalAsync(newAmphibian);
+                foreach (var animal in _amphibianProvider.Animals)
+                    Amphibians.Add(animal);
+                break;
+            case "Bird":
+                Birds = new();
+                var newBird = resultAnimal as Bird;
+                await _birdProvider.UpdateAnimalAsync(newBird);
+                foreach (var animal in _birdProvider.Animals)
+                    Birds.Add(animal);
+                break;
+            case "Mammal":
+                Mammals = new();
+                var newMammal = resultAnimal as Mammal;
+                await _mammalProvider.UpdateAnimalAsync(newMammal);
+                foreach (var animal in _mammalProvider.Animals)
+                    Mammals.Add(animal);
+                break;
+            default:
+                break;
+        }
 
     }
     private bool CanChangeOrRemoveAnimal() => SelectedAnimal == null ? false : true;

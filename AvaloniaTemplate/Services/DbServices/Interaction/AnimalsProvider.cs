@@ -78,6 +78,20 @@ namespace AvaloniaTemplate.Services.DbServices.Interaction
             return animal;
         }
 
+        public T UpdateAnimal(T animal)
+        {
+            if (animal == null)
+                throw new Exception($"{animal} can not be null");
+            _animals.Update(animal);
+            return animal;
+        }
+        public async Task<T> UpdateAnimalAsync(T animal)
+        {
+            if (animal == null)
+                throw new Exception($"{animal} can not be null");
+            await _animals.UpdateAsync(animal);
+            return animal;
+        }
 
 
         public AnimalsProvider(

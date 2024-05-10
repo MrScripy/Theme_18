@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AvaloniaTemplate.Models
 {
-    public abstract class Animal : Entity, IAnimal
+    public abstract partial class Animal : Entity, IAnimal
     {
         public string? Name { get; set; }
         public string? LatName { get; set; }
