@@ -34,6 +34,9 @@ public partial class MainViewModel : ViewModelBase
     private ObservableCollection<Bird> _birds = new();
     [ObservableProperty]
     private int _selectedTabItem;
+    [NotifyCanExecuteChangedFor(nameof(RemoveAnimalCommand))]
+    [ObservableProperty]
+    private Animal _selectedAnimal;
 
     private Factory _factory;
 
@@ -76,33 +79,28 @@ public partial class MainViewModel : ViewModelBase
         var animal = await _dialogService.ShowDialogAsync<Animal>(nameof(AddAnimalWindowViewModel));
         if (animal == null) return;
 
-
-        using (var db = ContextFactory.CreateDbContext())
+        var animalType = animal.GetType().Name;
+        switch (animalType)
         {
-
-            // var animalType = await db.AnimalTypes.FirstOrDefaultAsync(t => t.Name == animal.GetType().Name + "s");
-            var animalType = animal.GetType().Name;
-            switch (animalType)
-            {
-                case "Amphibian":
-                    var newAmphibian = animal as Amphibian;
-                    Amphibians.Add(newAmphibian);
-                    await _amphibianProvider.AddAnimalAsync(newAmphibian);
-                    break;
-                case "Bird":
-                    var newBird = animal as Bird;
-                    Birds.Add(newBird);
-                    await _birdProvider.AddAnimalAsync(newBird);
-                    break;
-                case "Mammal":
-                    var newMammal = animal as Mammal;
-                    Mammals.Add(newMammal);
-                    await _mammalProvider.AddAnimalAsync(newMammal);
-                    break;
-                default:
-                    break;
-            }
+            case "Amphibian":
+                var newAmphibian = animal as Amphibian;
+                Amphibians.Add(newAmphibian);
+                await _amphibianProvider.AddAnimalAsync(newAmphibian);
+                break;
+            case "Bird":
+                var newBird = animal as Bird;
+                Birds.Add(newBird);
+                await _birdProvider.AddAnimalAsync(newBird);
+                break;
+            case "Mammal":
+                var newMammal = animal as Mammal;
+                Mammals.Add(newMammal);
+                await _mammalProvider.AddAnimalAsync(newMammal);
+                break;
+            default:
+                break;
         }
+
     }
 
     [RelayCommand]
@@ -135,8 +133,34 @@ public partial class MainViewModel : ViewModelBase
             default:
                 break;
         }
-
     }
+
+    [RelayCommand(CanExecute = nameof(CanRemoveAnimal))]
+    private async Task RemoveAnimalAsync()
+    {
+        var animalType = SelectedAnimal.GetType().Name;
+        switch (animalType)
+        {
+            case "Amphibian":
+                var newAmphibian = SelectedAnimal as Amphibian;
+                Amphibians.Remove(newAmphibian);
+                await _amphibianProvider.RemoveAnimalAsync(newAmphibian);
+                break;
+            case "Bird":
+                var newBird = SelectedAnimal as Bird;
+                Birds.Remove(newBird);
+                await _birdProvider.RemoveAnimalAsync(newBird);
+                break;
+            case "Mammal":
+                var newMammal = SelectedAnimal as Mammal;
+                Mammals.Remove(newMammal);
+                await _mammalProvider.RemoveAnimalAsync(newMammal);
+                break;
+            default:
+                break;
+        }
+    }
+    private bool CanRemoveAnimal() => SelectedAnimal == null ? false : true;
 }
 
 

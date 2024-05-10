@@ -23,6 +23,7 @@
 
 		<StackPanel Grid.Row="1" Orientation="Horizontal" Spacing="20" HorizontalAlignment="Center">
 			<Button Classes="BlueRoundedBtn" FontSize="12" Content="Add animal" Command="{Binding AddAnimalCommand}"/>
+			<Button Classes="BlueRoundedBtn" FontSize="12" Content="Remove animal" Command="{Binding RemoveAnimalCommand}"/>
 			<Button Classes="BlueRoundedBtn" Content="Save txt" FontSize="12" Command="{Binding SaveCommand}" />
 		</StackPanel>
 		
@@ -42,7 +43,7 @@
 			<TabItem Header="Mammals">				
 					<DataGrid Grid.Row="1"
 							  ItemsSource="{Binding Mammals}" 
-							  SelectedItem="{}"
+							  SelectedItem="{Binding SelectedAnimal}"
 							  AutoGenerateColumns="False" 
 							  VerticalAlignment="Stretch" 
 							  HorizontalAlignment="Stretch"
@@ -68,7 +69,7 @@
 			<TabItem Header="Birds">				
 					<DataGrid Grid.Row="1"
 							  ItemsSource="{Binding Birds}"
-							  SelectedItem="{}"
+							  SelectedItem="{Binding SelectedAnimal}"
 							  AutoGenerateColumns="False"
 							  VerticalAlignment="Stretch"
 							  HorizontalAlignment="Stretch"
@@ -94,7 +95,7 @@
 			<TabItem Header="Amphibians">				
 					<DataGrid Grid.Row="1"
 							  ItemsSource="{Binding Amphibians}"
-							  SelectedItem="{}"
+							  SelectedItem="{Binding SelectedAnimal}"
 							  AutoGenerateColumns="False"
 							  VerticalAlignment="Stretch"
 							  HorizontalAlignment="Stretch"

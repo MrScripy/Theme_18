@@ -63,6 +63,23 @@ namespace AvaloniaTemplate.Services.DbServices.Interaction
             return _animals.Add(newAnimal);
         }
 
+        public T RemoveAnimal(T animal)
+        {
+            if (animal == null)
+                throw new Exception($"{animal} can not be null");
+            _animals.Remove(animal.Id);
+            return animal;
+        }
+        public async Task<T> RemoveAnimalAsync(T animal)
+        {
+            if (animal == null)
+                throw new Exception($"{animal} can not be null");
+            await _animals.RemoveAsync(animal.Id);
+            return animal;
+        }
+
+
+
         public AnimalsProvider(
             IRepository<T> animals,
             IRepository<AnimalType> animalTypes
