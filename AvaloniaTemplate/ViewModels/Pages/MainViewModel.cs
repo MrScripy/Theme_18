@@ -10,7 +10,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace AvaloniaTemplate.ViewModels.Pages;
@@ -66,7 +65,7 @@ public partial class MainViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task AddAnimal()
+    private async Task AddAnimalAsync()
     {
         var animal = await _dialogService.ShowDialogAsync<Animal>(nameof(AddAnimalWindowViewModel));
         if (animal == null) return;
@@ -96,7 +95,7 @@ public partial class MainViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task LoadData()
+    private void LoadData()
     {
         foreach (var animal in _mammalProvider.Animals)
             Mammals.Add(animal);
@@ -109,7 +108,7 @@ public partial class MainViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private async Task Save()
+    private async Task SaveAsync()
     {
         switch (SelectedTabItem)
         {
